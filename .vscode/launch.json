@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "resolveSourceMapLocations": ["!**/node_modules/**"],
+  "configurations": [
+    {
+      "name": "trimli-server - start debug",
+      "type": "node",
+      "runtimeVersion": "22.17",
+      "request": "launch",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["start:dev"],
+      "outputCapture": "std"
+    }
+  ]
+}
