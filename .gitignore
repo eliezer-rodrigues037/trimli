@@ -3,6 +3,7 @@
 /node_modules
 /build
 /tmp
+.yarn/install-state.gz
 
 # Logs
 logs
