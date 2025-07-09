@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 import { isDefined } from 'src/utils/isDefined';
 
-// TODO: Implement custom expetions
+// TODO: Implement custom exceptions
 // import {
 //     ConfigVariableException,
 //     ConfigVariableExceptionCode,
@@ -18,7 +18,7 @@ import { isDefined } from 'src/utils/isDefined';
 
 export class ConfigVariables {
   @IsOptional()
-  NODE_PORT = 3000;
+  PORT = 3000;
 
   @IsDefined()
   @IsUrl({

@@ -14,7 +14,7 @@
   },
   "javascript.format.enable": false,
   "typescript.format.enable": false,
-  "cSpell.words": ["trimli"],
+  "cSpell.words": ["datasource", "trimli"],
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "search.exclude": {
     "**/.yarn": true
