@@ -9,7 +9,7 @@ import { RedirectModule } from './modules/redirect/redirect.module';
     TrimliConfigModule.forRoot(),
     TypeORMModule,
     LinkModule,
-  imports: [TrimliConfigModule.forRoot(), TypeORMModule],
+    RedirectModule,
   ],
 })
 export class AppModule {}
