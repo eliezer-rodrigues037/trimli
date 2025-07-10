@@ -1,4 +1,5 @@
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -11,6 +12,7 @@ import {
 @Entity()
 export class Link {
   @ApiHideProperty()
+  @Exclude()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -60,5 +62,6 @@ export class Link {
 
   @DeleteDateColumn()
   @ApiHideProperty()
+  @Exclude()
   deletedAt: Date | null;
 }

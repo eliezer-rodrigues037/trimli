@@ -10,6 +10,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { TransformResponse } from 'src/decorators/transform-response.decorator';
 import { Link } from 'src/modules/link/entities/link.entity';
 import { CreateLinkDto } from './dto/create-link.dto';
 import { UpdateLinkDto } from './dto/update-link.dto';
@@ -27,6 +28,7 @@ export class LinkController {
     status: 201,
     description: 'The link has been successfully created.',
   })
+  @TransformResponse(Link)
   async create(@Body() createLinkDto: CreateLinkDto) {
     return await this.linkService.create(createLinkDto);
   }
