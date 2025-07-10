@@ -8,5 +8,6 @@ import { RedirectService } from './redirect.service';
   imports: [TypeOrmModule.forFeature([Link])],
   controllers: [RedirectController],
   providers: [RedirectService],
+  exports: [RedirectService],
 })
 export class RedirectModule {}

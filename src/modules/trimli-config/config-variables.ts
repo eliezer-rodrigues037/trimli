@@ -4,6 +4,7 @@ import { plainToClass } from 'class-transformer';
 import {
   IsDefined,
   IsOptional,
+  IsString,
   IsUrl,
   ValidationError,
   validateSync,
@@ -19,6 +20,10 @@ import { isDefined } from 'src/utils/isDefined';
 export class ConfigVariables {
   @IsOptional()
   PORT = 3000;
+
+  @IsString()
+  @IsOptional()
+  SERVER_URL: string = `http://localhost:${this.PORT}`;
 
   @IsDefined()
   @IsUrl({
