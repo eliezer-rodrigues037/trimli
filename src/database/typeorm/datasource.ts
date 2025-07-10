@@ -14,7 +14,7 @@ export const typeORMModuleOptions: TypeOrmModuleOptions = {
   type: 'mysql',
   logging: ['error'],
   entities: [`${isJest ? '' : 'dist/'}src/modules/**/*.entity{.ts,.js}`],
-  synchronize: false,
+  synchronize: true,
   migrationsRun: false,
   migrationsTableName: '_typeorm_migrations',
   migrations: [
@@ -23,6 +23,6 @@ export const typeORMModuleOptions: TypeOrmModuleOptions = {
   autoLoadEntities: true,
 };
 
-export const dataSource = new DataSource(
+export const appDataSource = new DataSource(
   typeORMModuleOptions as DataSourceOptions,
 );
