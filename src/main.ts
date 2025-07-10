@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 import { TrimliConfigService } from 'src/modules/trimli-config/trimli-config.service';
 import { AppModule } from './app.module';
 
@@ -11,7 +12,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Trimli API')
     .setDescription('Simple URL shortener API')
-    .setVersion('0.0.1')
+    .setVersion(process.env.npm_package_version as string)
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
