@@ -30,6 +30,7 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/require-await': 'off',
+      '@typescript-eslint/no-unused-vars': 'warn',
     },
   },
 );
