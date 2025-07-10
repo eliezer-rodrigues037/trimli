@@ -35,6 +35,7 @@ export class LinkController {
 
   // TODO: Protect this endpoint with authentication
   @Get()
+  @TransformResponse(Link)
   async findAll() {
     return await this.linkService.findAll();
   }
@@ -42,6 +43,7 @@ export class LinkController {
   // TODO: Protect this endpoint with authentication
   @Get(':shortCode')
   @ApiResponse({ status: 404, description: 'Link not found' })
+  @TransformResponse(Link)
   async findOne(@Param('shortCode') shortCode: string) {
     const link = await this.linkService.findOne(shortCode);
 
@@ -59,6 +61,7 @@ export class LinkController {
   })
   @ApiResponse({ status: 404, description: 'Link not found' })
   @ApiBody({ type: UpdateLinkDto })
+  @TransformResponse(Link)
   async update(
     @Param('shortCode') shortCode: string,
     @Body() updateLinkDto: UpdateLinkDto,
