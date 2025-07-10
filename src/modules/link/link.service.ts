@@ -21,18 +21,21 @@ export class LinkService {
     private linkRepository: Repository<Link>,
   ) {}
 
-  async create(payload: CreateLinkDto) {
+  async create(createLinkDto: CreateLinkDto): Promise<Link> {
     const shortCode = await this.generateShortCode();
 
-    const link = this.linkRepository.create({
-      ...payload,
+    const link = await this.linkRepository.save({
+      ...createLinkDto,
       shortCode,
     });
 
-    return link;
+    return {
+      ...link,
+      redirectUrl: this.redirectService.buildRedirectUrl(link),
+    };
   }
 
-  async findAll() {
+  async findAll(): Promise<Link[]> {
     const links = await this.linkRepository.find();
 
     return links.map((link) => ({
@@ -41,23 +44,23 @@ export class LinkService {
     }));
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<Link | null> {
     const link = await this.linkRepository.findOne({
       where: { shortCode: id },
     });
 
-    return { ...link, redirectUrl: link ? this.getRedirectUrl(link) : null };
+    return link ? { ...link, redirectUrl: this.getRedirectUrl(link) } : null;
   }
 
   async update({
-    id,
+    shortCode,
     updateLinkDto,
   }: {
-    id: string;
+    shortCode: string;
     updateLinkDto: UpdateLinkDto;
-  }) {
+  }): Promise<Link> {
     const link = await this.linkRepository.findOne({
-      where: [{ shortCode: id }],
+      where: [{ shortCode: shortCode }],
     });
 
     if (!isDefined(link)) throw new BadRequestException('Link not found');
@@ -70,9 +73,9 @@ export class LinkService {
     return updatedLink;
   }
 
-  async remove(id: string) {
+  async remove(shortCode: string) {
     const link = await this.linkRepository.findOne({
-      where: { shortCode: id },
+      where: { shortCode },
     });
 
     if (!isDefined(link)) throw new BadRequestException('Link not found');
