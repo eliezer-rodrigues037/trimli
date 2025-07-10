@@ -3,6 +3,7 @@ import { TrimliConfigModule } from 'src/modules/trimli-config/trimli-config.modu
 import { TypeORMModule } from 'src/modules/typeorm/typeorm.module';
 import { LinkModule } from './modules/link/link.module';
 import { RedirectModule } from './modules/redirect/redirect.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { RedirectModule } from './modules/redirect/redirect.module';
     TypeORMModule,
     LinkModule,
     RedirectModule,
+    UserModule,
   ],
 })
 export class AppModule {}
