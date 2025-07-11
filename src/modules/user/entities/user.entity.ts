@@ -1,6 +1,6 @@
 import { ApiExtraModels, ApiHideProperty, ApiProperty } from '@nestjs/swagger';
-import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
+import { hashPassword } from 'src/modules/auth/utils/auth.utils';
 import { Link } from 'src/modules/link/entities/link.entity';
 import {
   BeforeInsert,
@@ -33,13 +33,16 @@ export class User {
   })
   name: string;
 
-  @Column()
   @ApiProperty()
+  @Column({
+    unique: true,
+  })
   email: string;
 
+  @ApiHideProperty()
+  @Exclude()
   @Column()
-  @ApiProperty()
-  password: string;
+  passwordHash: string;
 
   @ApiProperty({ type: () => [Link] })
   @OneToMany(() => Link, (link) => link.user)
@@ -54,11 +57,8 @@ export class User {
   @BeforeInsert()
   @BeforeUpdate()
   protected async hashPassword() {
-    const saltOrRounds = 10;
-    const password = this.password;
+    const hashedPassword = await hashPassword(this.passwordHash);
 
-    const hashedPassword = await bcrypt.hash(password, saltOrRounds);
-
-    this.password = hashedPassword;
+    this.passwordHash = hashedPassword;
   }
 }

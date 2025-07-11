@@ -10,6 +10,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/decorators/public.decorator';
 import { TransformResponse } from 'src/decorators/transform-response.decorator';
 import { Link } from 'src/modules/link/entities/link.entity';
 import { CreateLinkDto } from './dto/create-link.dto';
@@ -22,6 +23,7 @@ export class LinkController {
   constructor(private readonly linkService: LinkService) {}
 
   @Post()
+  @Public()
   @HttpCode(201)
   @ApiBody({ type: CreateLinkDto })
   @ApiResponse({
@@ -33,14 +35,12 @@ export class LinkController {
     return await this.linkService.create(createLinkDto);
   }
 
-  // TODO: Protect this endpoint with authentication
   @Get()
   @TransformResponse(Link)
   async findAll() {
     return await this.linkService.findAll();
   }
 
-  // TODO: Protect this endpoint with authentication
   @Get(':shortCode')
   @ApiResponse({ status: 404, description: 'Link not found' })
   @TransformResponse(Link)
@@ -52,7 +52,6 @@ export class LinkController {
     return link;
   }
 
-  // TODO: Protect this endpoint with authentication
   @Patch(':shortCode')
   @ApiResponse({
     status: 200,
@@ -72,7 +71,6 @@ export class LinkController {
     });
   }
 
-  // TODO: Protect this endpoint with authentication
   @Delete(':shortCode')
   async remove(@Param('shortCode') shortCode: string) {
     return await this.linkService.remove(shortCode);

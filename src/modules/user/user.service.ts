@@ -13,10 +13,15 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
-    const user = await this.userRepository.save({
-      ...createUserDto,
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const { password, ...restCreateUserDto } = createUserDto;
+
+    const userToCreate = this.userRepository.create({
+      ...restCreateUserDto,
+      passwordHash: password,
     });
+
+    const user = await this.userRepository.save(userToCreate);
 
     return user;
   }
@@ -27,16 +32,32 @@ export class UserService {
   }: {
     id: string;
     updateUserDto: UpdateUserDto;
-  }) {
+  }): Promise<User> {
     const userExists = await this.userRepository.findOneBy({ id });
 
     if (!isDefined(userExists)) throw new NotFoundException('User not found');
 
+    const { password, ...restUpdateUserDto } = updateUserDto;
+
     const updatedUser = await this.userRepository.save({
       ...userExists,
-      ...updateUserDto,
+      ...restUpdateUserDto,
+      passwordHash: password,
     });
 
     return updatedUser;
+  }
+
+  async findOne({
+    email,
+    id,
+  }: {
+    email?: string;
+    id?: string;
+  }): Promise<User | null> {
+    const user = await this.userRepository.findOne({
+      where: [{ email }, { id }],
+    });
+    return user;
   }
 }

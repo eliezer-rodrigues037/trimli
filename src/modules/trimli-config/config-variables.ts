@@ -9,6 +9,7 @@ import {
   ValidationError,
   validateSync,
 } from 'class-validator';
+import { IsDuration } from 'src/decorators/is-duration.decorator';
 import { isDefined } from 'src/utils/isDefined';
 
 // TODO: Implement custom exceptions
@@ -24,6 +25,15 @@ export class ConfigVariables {
   @IsString()
   @IsOptional()
   SERVER_URL: string = `http://localhost:${this.PORT}`;
+
+  @IsString()
+  @IsDefined()
+  APP_SECRET: string;
+
+  @IsDuration()
+  @IsString()
+  @IsOptional()
+  ACCESS_TOKEN_EXPIRES_IN: string = '30m';
 
   @IsDefined()
   @IsUrl({

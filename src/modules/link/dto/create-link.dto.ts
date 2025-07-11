@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsUrl, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsUrl } from 'class-validator';
 
 export class CreateLinkDto {
   @ApiProperty({
@@ -9,11 +9,4 @@ export class CreateLinkDto {
   @IsUrl()
   @IsNotEmpty()
   sourceURl: string;
-
-  @ApiProperty({
-    required: false,
-  })
-  @IsUUID('4')
-  @IsOptional()
-  userId: string;
 }
