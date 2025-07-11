@@ -1,11 +1,15 @@
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
+import { User } from 'src/modules/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
+  Relation,
   UpdateDateColumn,
 } from 'typeorm';
 
@@ -53,6 +57,21 @@ export class Link {
     format: 'uri',
   })
   redirectUrl: string;
+
+  @ApiProperty({ type: () => User, nullable: true })
+  @ManyToOne(() => User, (user) => user.links, {
+    nullable: true,
+  })
+  @JoinColumn({
+    name: 'userId',
+  })
+  user: Relation<User>;
+
+  @Column({
+    nullable: true,
+  })
+  @Exclude()
+  userId: string;
 
   @CreateDateColumn()
   createdAt: Date;
