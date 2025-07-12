@@ -1,5 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Public } from 'src/decorators/public.decorator';
 import { AuthService } from 'src/modules/auth/auth.service';
 import { SignInDto } from 'src/modules/auth/dto/signin.dto';
 import { AuthResponse } from 'src/modules/auth/interfaces/auth-response.interface';
@@ -29,6 +30,7 @@ export class AuthController {
   @ApiResponse({ status: 400, description: 'Invalid input' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 500, description: 'Server error' })
+  @Public()
   @HttpCode(HttpStatus.OK)
   @Post('signIn')
   async signIn(@Body() signInDto: SignInDto) {

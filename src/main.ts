@@ -13,6 +13,10 @@ async function bootstrap() {
     .setTitle('Trimli API')
     .setDescription('Simple URL shortener API')
     .setVersion(process.env.npm_package_version as string)
+    .addSecurity('bearer', {
+      scheme: 'bearer',
+      type: 'http',
+    })
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
