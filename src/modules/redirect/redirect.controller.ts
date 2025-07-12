@@ -2,6 +2,7 @@ import { Controller, Get, HttpCode, Param, Res } from '@nestjs/common';
 
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
+import { Public } from 'src/decorators/public.decorator';
 import { RedirectService } from './redirect.service';
 
 @Controller('')
@@ -27,6 +28,7 @@ export class RedirectController {
     },
   })
   @ApiResponse({ status: 404, description: 'Link not found' })
+  @Public()
   async redirect(@Param('shortCode') shortCode: string, @Res() res: Response) {
     const sourceUrl = await this.redirectService.getSourceUrl({ shortCode });
 
