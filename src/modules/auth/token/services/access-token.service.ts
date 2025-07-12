@@ -17,14 +17,20 @@ export class AccessTokenService {
     private userRepository: Repository<User>,
   ) {}
 
-  async validateTokenByRequest(request: Request): Promise<{ user: User }> {
+  async validateTokenByRequest(
+    request: Request,
+    isPublic: boolean = false,
+  ): Promise<{ user?: User }> {
     const token = this.extractTokenFromAuthHeader(
       request.headers.authorization,
     );
 
-    if (!token) {
+    if (!token && !isPublic) {
       throw new UnauthorizedException();
     }
+
+    if (!token) return { user: undefined };
+
     try {
       const payload = await this.jwtService.verifyAsync<TokenPayload>(token, {
         secret: this.trimliConfigService.get('APP_SECRET'),

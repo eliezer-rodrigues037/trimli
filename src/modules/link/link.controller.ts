@@ -9,10 +9,12 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthUser } from 'src/decorators/auth-user.decorator';
 import { Public } from 'src/decorators/public.decorator';
 import { TransformResponse } from 'src/decorators/transform-response.decorator';
 import { Link } from 'src/modules/link/entities/link.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 import { CreateLinkDto } from './dto/create-link.dto';
 import { UpdateLinkDto } from './dto/update-link.dto';
 import { LinkService } from './link.service';
@@ -30,22 +32,28 @@ export class LinkController {
     status: 201,
     description: 'The link has been successfully created.',
   })
+  @ApiBearerAuth()
   @TransformResponse(Link)
-  async create(@Body() createLinkDto: CreateLinkDto) {
-    return await this.linkService.create(createLinkDto);
+  async create(@Body() createLinkDto: CreateLinkDto, @AuthUser() user?: User) {
+    return await this.linkService.create({ createLinkDto, userId: user?.id });
   }
 
   @Get()
-  @TransformResponse(Link)
-  async findAll() {
-    return await this.linkService.findAll();
+  @ApiBearerAuth()
+  async findAll(@AuthUser() user: User) {
+    return await this.linkService.findAll({
+      userId: user?.id,
+    });
   }
 
   @Get(':shortCode')
+  @ApiBearerAuth()
   @ApiResponse({ status: 404, description: 'Link not found' })
-  @TransformResponse(Link)
-  async findOne(@Param('shortCode') shortCode: string) {
-    const link = await this.linkService.findOne(shortCode);
+  async findOne(@Param('shortCode') shortCode: string, @AuthUser() user: User) {
+    const link = await this.linkService.findOne({
+      shortCode,
+      userId: user.id,
+    });
 
     if (!link) throw new NotFoundException('Link not found');
 
@@ -60,19 +68,22 @@ export class LinkController {
   })
   @ApiResponse({ status: 404, description: 'Link not found' })
   @ApiBody({ type: UpdateLinkDto })
-  @TransformResponse(Link)
+  @ApiBearerAuth()
   async update(
     @Param('shortCode') shortCode: string,
     @Body() updateLinkDto: UpdateLinkDto,
+    @AuthUser() user: User,
   ) {
     return await this.linkService.update({
       shortCode,
       updateLinkDto,
+      userId: user.id,
     });
   }
 
   @Delete(':shortCode')
-  async remove(@Param('shortCode') shortCode: string) {
-    return await this.linkService.remove(shortCode);
+  @ApiBearerAuth()
+  async remove(@Param('shortCode') shortCode: string, @AuthUser() user: User) {
+    return await this.linkService.remove({ shortCode, userId: user.id });
   }
 }
