@@ -55,9 +55,9 @@ $ yarn test:cov     # Coverage
 
 ## Feature Roadmap
 
-- [ ] Add the user entity attached to the link entity
-- [ ] Add an authentication system
-- [ ] Add protection to link edit/delete/list endpoints
-- [ ] Add tracking to the redirect URL for calls from authenticated users
+- [x] Add the user entity attached to the link entity
+- [x] Add an authentication system
+- [x] Add protection to link edit/delete/list endpoints
+- [x] Add tracking to the redirect URL for calls from authenticated users
 - [ ] Add exception filters
 - [ ] Add response hydrations
