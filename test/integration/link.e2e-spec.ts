@@ -17,17 +17,19 @@ describe('Link (e2e)', () => {
     await app.init();
   });
 
-  it('Should create a Link', () => {
+  it('Should create a Link', async () => {
     const createLinkPayload: CreateLinkDto = {
       sourceURl: 'https://example.com',
     };
 
-    return request(app.getHttpServer())
+    await request(app.getHttpServer())
       .post('/link')
+      .set('Content-Type', 'application/json')
       .send(JSON.stringify(createLinkPayload))
       .expect(201)
       .expect((res) => {
-        expect(res.body.id).toBeDefined();
+        expect(res.body.sourceURl).toBeDefined();
+        expect(res.body.shortCode).toBeDefined();
         expect(res.body.redirectUrl).toBeDefined();
       });
   });
