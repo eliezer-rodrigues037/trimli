@@ -61,9 +61,9 @@ $ yarn test:cov     # Coverage
 
 ## Feature Roadmap
 
-- [x] Add the user entity attached to the link entity
-- [x] Add an authentication system
-- [x] Add protection to link edit/delete/list endpoints
-- [x] Add tracking to the redirect URL for calls from authenticated users
-- [ ] Add exception filters
-- [ ] Add response hydrations
+- [ ] Add more e2e test specs on links/redirect modules (WIP);
+- [ ] Add exception filters;
+- [ ] Add seed command for local setup;
+- [ ] Add server service inside docker compose file in `trimli-docker` for one-click production setup;
+- [ ] Add link metrics endpoint for link click count with filter options;
+- [ ] Add click activity entity to track click date/time and other metadata metric to be used in in stats endpoint;
