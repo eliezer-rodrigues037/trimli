@@ -45,7 +45,13 @@ $ yarn start:dev
 $ yarn build && yarn start:prod
 ```
 
-### 5. Run tests
+### 5. Use Trimli API
+
+The server will be up and running at [http://localhost:3000](http://localhost:3000)
+
+You can access the api using the SwaggerUI at [http://localhost:3000/api](http://localhost:3000/api)
+
+### 6. Run tests
 
 ```bash
 $ yarn test         # Unit tests
