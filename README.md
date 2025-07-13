@@ -1,6 +1,6 @@
 # Trimli
 
-A minimal [NestJS](https://nestjs.com/) **URL shortener API**. Includes:
+A minimal [NestJS](https://nestjs.com/) **URL shortener API**.
 
 ---
 
