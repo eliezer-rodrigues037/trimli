@@ -1,10 +1,11 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from 'src/modules/app/app.module';
+import { CreateLinkDto } from 'src/modules/link/dto/create-link.dto';
 import * as request from 'supertest';
 import { App } from 'supertest/types';
 
-describe('App (e2e)', () => {
+describe('Link (e2e)', () => {
   let app: INestApplication<App>;
 
   beforeEach(async () => {
@@ -16,10 +17,18 @@ describe('App (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('Should create a Link', () => {
+    const createLinkPayload: CreateLinkDto = {
+      sourceURl: 'https://example.com',
+    };
+
     return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+      .post('/link')
+      .send(JSON.stringify(createLinkPayload))
+      .expect(201)
+      .expect((res) => {
+        expect(res.body.id).toBeDefined();
+        expect(res.body.redirectUrl).toBeDefined();
+      });
   });
 });

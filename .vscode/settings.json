@@ -20,5 +20,8 @@
     "**/.yarn": true
   },
   "eslint.debug": true,
-  "files.associations": {}
+  "files.associations": {},
+  "jestrunner.configPath": {
+    "**/*.e2e-spec.ts": "./jest-e2e.json"
+  }
 }

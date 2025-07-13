@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['eslint.config.mjs'],
+    ignores: ['eslint.config.mjs', '**/*test.*', '**/*spec.*'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
@@ -26,10 +26,9 @@ export default tseslint.config(
     },
   },
   {
+    files: ['src/**/*.ts'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-floating-promises': 'warn',
-      '@typescript-eslint/require-await': 'off',
       '@typescript-eslint/no-unused-vars': 'warn',
     },
   },
