@@ -21,15 +21,10 @@
   },
   "eslint.debug": true,
   "files.associations": {},
-  "jestrunner.configPath": {
-    "**/*.e2e-spec.ts": "./jest-config.ts"
-  },
+  "jestrunner.configPath": "./jest-config.ts",
   "jestrunner.debugOptions": {
     "jestPath": "node_modules/.bin/jest",
     "runInBand": true,
-    "config": "./jest-config.ts",
-    "env": {
-      "NODE_ENV": "test"
-    }
+    "config": "./jest-config.ts"
   }
 }

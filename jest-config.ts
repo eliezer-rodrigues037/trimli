@@ -1,24 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { JestConfigWithTsJest, pathsToModuleNameMapper } from 'ts-jest';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const tsConfig = require('./tsconfig.json');
+import { JestConfigWithTsJest } from 'ts-jest';
 
 const jestConfig: JestConfigWithTsJest = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: './',
   testEnvironment: 'node',
-  testRegex: 'spec.ts$',
+  testRegex: '.(spec|e2e-spec).ts$',
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
-  // transformIgnorePatterns: ['/node_modules/'],
+  transformIgnorePatterns: ['/node_modules/'],
   moduleNameMapper: {
-    ...pathsToModuleNameMapper(tsConfig.compilerOptions.paths, {
-      prefix: '<rootDir>/../..',
-    }),
     '^src/(.*)$': '<rootDir>/src/$1',
     '^test/(.*)': '<rootDir>/test/$1',
   },
