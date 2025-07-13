@@ -1,18 +1,24 @@
-import dotenv from 'dotenv';
-import { JestConfigWithTsJest } from 'ts-jest';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import { JestConfigWithTsJest, pathsToModuleNameMapper } from 'ts-jest';
 
-dotenv.config({ path: '.env.test', override: true });
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const tsConfig = require('./tsconfig.json');
 
 const jestConfig: JestConfigWithTsJest = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: './',
   testEnvironment: 'node',
-  testRegex: '.e2e-spec.ts$',
+  testRegex: 'spec.ts$',
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
-  transformIgnorePatterns: ['/node_modules/'],
+  // transformIgnorePatterns: ['/node_modules/'],
   moduleNameMapper: {
+    ...pathsToModuleNameMapper(tsConfig.compilerOptions.paths, {
+      prefix: '<rootDir>/../..',
+    }),
     '^src/(.*)$': '<rootDir>/src/$1',
     '^test/(.*)': '<rootDir>/test/$1',
   },
